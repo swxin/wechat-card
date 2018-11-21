@@ -2,52 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: ycy
- * Date: 18-11-15
- * Time: 下午11:34
+ * Date: 18-11-18
+ * Time: 下午7:11
  */
 
 namespace wechat\request;
 
+use wechat\card\Card;
 
-class CardBatchGetRequest implements RequestInterface
+class CardCreateRequest implements RequestInterface
 {
     use RequestTrait;
 
     public $access_token;
 
-    private $offset;
-    private $count;
-    /**
-     * @var array
-     */
-    private $status_list;
-
-    const CARD_STATUS_VERIFY_OK = 'CARD_STATUS_VERIFY_OK';
-    const CARD_STATUS_DISPATCH = 'CARD_STATUS_DISPATCH';
 
     /**
-     * @param mixed $offset
+     * @var $card
      */
-    public function setOffset($offset)
-    {
-        $this->offset = $offset;
-    }
+    private  $card;
 
-    /**
-     * @param mixed $count
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
-    }
-
-    /**
-     * @param array $status_list
-     */
-    public function setStatusList($status_list)
-    {
-        $this->status_list = $status_list;
-    }
 
 
     public function getMethod()
@@ -57,9 +31,17 @@ class CardBatchGetRequest implements RequestInterface
 
     public function getPath()
     {
-        return "/card/batchget";
+        return "/card/create";
     }
 
+
+    /**
+     * @param Card $card
+     */
+    public function setCard(Card $card){
+
+        $this->card=$card;
+    }
 
     /**
      * @return array
@@ -76,6 +58,9 @@ class CardBatchGetRequest implements RequestInterface
      */
     public function getBody()
     {
-        return json_encode($this->objectPrivateToArray($this));
+        return json_encode($this->objectPrivateToArray($this),JSON_UNESCAPED_UNICODE);
     }
 }
+
+
+
